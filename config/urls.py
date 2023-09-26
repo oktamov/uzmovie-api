@@ -45,6 +45,7 @@ swagger_urls = [
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('movies/', include('movies.urls')),
+    path('users/', include('user.urls')),
     path('', include('common.urls')),
 ]
 
