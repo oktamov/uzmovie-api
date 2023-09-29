@@ -14,14 +14,14 @@ class CategoryView(generics.ListAPIView):
 
 
 class CategoryMoviesListView(generics.ListAPIView):
-    serializer_class = MovieSerializer
+    serializer_class = MovieListSerializer
     pagination_class = CustomPageNumberPagination
 
     def get_queryset(self):
         slug = self.kwargs['slug']
         try:
             category = Category.objects.get(slug=slug)
-            movie = Movie.objects.filter(category=category)
+            movie = Movie.objects.filter(category=category).order_by('-id')
             return movie
 
         except Category.DoesNotExist:

@@ -20,7 +20,7 @@ class Movie(models.Model):
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     liked = models.ManyToManyField(User, default=None, blank=True, related_name='liked')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,  blank=True, null=True)
+    category = models.ManyToManyField(Category,  blank=True, null=True)
 
     def __str__(self):
         return self.name

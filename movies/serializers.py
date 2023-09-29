@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from common.serializers import CategoryListSerializer
 from movies.models import Movie, Review
 
 
@@ -12,6 +13,7 @@ class ReviewSerializers(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializers(many=True)
     liked = serializers.SerializerMethodField()
+    category = CategoryListSerializer(many=True)
 
     def get_liked(self, obj):
         user = self.context['request'].user
@@ -24,16 +26,16 @@ class MovieSerializer(serializers.ModelSerializer):
             'description',
             'created_at', 'liked', 'num_likes', 'category', 'reviews')
 
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data["category"] = instance.category.name
-        return data
+    # def to_representation(self, instance):
+    #     data = super().to_representation(instance)
+    #     data["category"] = instance.category.name
+    #     return data
 
 
 class MovieListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ("id", 'name', 'slug', 'poster_url', 'movie_year')
+        fields = ("id", 'name', 'slug', 'img_url', 'movie_year')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
