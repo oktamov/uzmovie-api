@@ -7,7 +7,7 @@ from movies.models import Movie, Review
 class ReviewSerializers(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ("id", "full_name", "comment", "parent",)
+        fields = ("id", "full_name", "comment", "parent", 'created_at')
 
 
 class MovieSerializer(serializers.ModelSerializer):
@@ -41,4 +41,4 @@ class MovieListSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ("id", 'full_name', 'comment', 'parent')
+        fields = ("id", 'full_name', 'comment', 'parent', 'created_at')
