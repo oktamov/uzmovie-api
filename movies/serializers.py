@@ -11,9 +11,17 @@ class ReviewSerializers(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    reviews = ReviewSerializers(many=True)
+    # reviews = ReviewSerializers(many=True)
     liked = serializers.SerializerMethodField()
     category = CategoryListSerializer(many=True)
+    reviews = serializers.SerializerMethodField()
+
+    def get_reviews(self, obj):
+        from .models import Review
+
+        recent_reviews = Review.objects.filter(movie=obj).order_by(
+            '-created_at')
+        return ReviewSerializers(recent_reviews, many=True).data
 
     def get_liked(self, obj):
         user = self.context['request'].user
